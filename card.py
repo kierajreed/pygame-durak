@@ -22,12 +22,14 @@ class Card(object):
             else:
                 raise Exception('Invalid value!')
 
-    def __str__(self):
+    def toString(self):
         try:
             int(self.rank)
             return ['#', '#', '#', '#', '#', '#', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'][int(self.rank)] + ' of ' + self.suit
         except ValueError:
             return self.rank + ' of ' + self.suit
 
+    def __str__(self):
+        return self.toString()
     def __repr__(self):
-        # Code here!
+        return self.toString()
