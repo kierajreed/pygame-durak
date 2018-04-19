@@ -15,5 +15,5 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
 
-    screen.fill(utils.SCREEN_FILL)
+    screen.fill(utils.BACKGROUND)
     pygame.display.flip()

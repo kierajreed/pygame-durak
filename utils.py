@@ -4,7 +4,7 @@ from card import Card
 
 # CONSTANTS #
 SCREEN_SIZE = WIDTH, HEIGHT = 800, 600
-SCREEN_FILL = 64, 64, 64
+BACKGROUND = 64, 64, 64
 
 RANKS = ['6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
 SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
