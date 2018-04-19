@@ -16,12 +16,21 @@ def loadImage(filename):
 def loadCard(card):
     return pygame.image.load('assets/images/cards/' + repr(card))
 
-def getDeckArray():
-    trumpSuit = SUITS[random.randrange(0, 3)]
+def getDeckArray(revealedCard):
     deck = []
 
     for suit in SUITS:
         for rank in RANKS:
-            deck.append(Card(rank, suit, (suit == trumpSuit)))
+            if(revealedCard != None):
+                if(revealedCard.suit == suit):
+                    if(revealedCard.rank == rank):
+                        continue
+                    else:
+                        deck.append(Card(rank, suit, True))
+                else:
+                    deck.append(Card(rank, suit, False))
+            elif(revealedCard == None):
+                deck.append(Card(rank, suit, False))
 
     random.shuffle(deck)
+    return deck
