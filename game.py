@@ -30,5 +30,8 @@ if __name__ == '__main__':
                 if event.type == pygame.QUIT: sys.exit()
 
                 screen.fill(utils.BACKGROUND)
-                screen.blit(utils.loadTrumpCard(trump_card), (0, 0))
+
+                screen.blit(utils.loadTrumpCard(trump_card), utils.TRUMP_POSITION)
+                screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
+
                 pygame.display.flip()

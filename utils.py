@@ -3,11 +3,14 @@ import random
 from card import Card
 
 # CONSTANTS #
-SCREEN_SIZE = WIDTH, HEIGHT = 800, 600
+SCREEN_SIZE = WIDTH, HEIGHT = 1000, 700
 BACKGROUND = 64, 64, 64
 
 RANKS = ['6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
 SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+
+DECK_POSITION = (10, (HEIGHT - 228) / 2)
+TRUMP_POSITION = (30, (HEIGHT - 150) / 2)
 
 CARD_SIZE = (150, 228)
 
