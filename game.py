@@ -34,4 +34,10 @@ if __name__ == '__main__':
                 screen.blit(utils.loadTrumpCard(trump_card), utils.TRUMP_POSITION)
                 screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
 
+                for index in range(0, len(player_hand)):
+                    screen.blit(utils.loadCard(player_hand[index]), utils.getCardPosition(index, len(player_hand), False))
+
+                for index in range(0, len(ai_hand)):
+                    screen.blit(utils.loadCardBack(), utils.getCardPosition(index, len(ai_hand), True))
+
                 pygame.display.flip()

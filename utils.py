@@ -9,16 +9,17 @@ BACKGROUND = 64, 64, 64
 RANKS = ['6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
 SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 
-DECK_POSITION = (10, (HEIGHT - 228) / 2)
-TRUMP_POSITION = (30, (HEIGHT - 150) / 2)
-
 CARD_SIZE = (150, 228)
+
+DECK_POSITION = (10, (HEIGHT - 228) / 2)
+TRUMP_POSITION = (43, (HEIGHT - 150) / 2)
+
+HAND_WIDTH = 800
+HAND_POSITION = HAND_X, HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 50, HEIGHT - 160)
+AI_HAND_POSITION = AI_HAND_X, AI_HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 50, -100)
 
 
 # Helper functions used to make code cleaner. #
-def loadImage(filename):
-    return pygame.image.load('assets/images/' + filename)
-
 def loadCard(card):
     image = pygame.image.load('assets/images/cards/' + card.filename)
     return pygame.transform.scale(image, CARD_SIZE)
@@ -27,7 +28,7 @@ def loadTrumpCard(card):
     return pygame.transform.rotate(loadCard(card), 270)
 
 def loadCardBack():
-    return pygame.transform.scale(loadImage('cards/back.png'), CARD_SIZE)
+    return pygame.transform.scale(pygame.image.load('assets/images/cards/back.png'), CARD_SIZE)
 
 
 def getDeckArray(revealedCard):
@@ -49,4 +50,30 @@ def getDeckArray(revealedCard):
     random.shuffle(deck)
     return deck
 
-#def renderHand(hand, hidden):
+
+def getCardPosition(index, num_cards, opponent):
+    if opponent:
+        if index == 0:
+            return AI_HAND_POSITION
+        else:
+            return (AI_HAND_X + ((HAND_WIDTH - 150) / num_cards) * index, AI_HAND_Y)
+    else:
+        if index == 0:
+            return HAND_POSITION
+        else:
+            return (HAND_X + ((HAND_WIDTH - 150) / num_cards) * index, HAND_Y)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
