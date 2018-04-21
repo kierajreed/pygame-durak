@@ -20,6 +20,13 @@ def loadCard(card):
     image = pygame.image.load('assets/images/cards/' + card.filename)
     return pygame.transform.scale(image, CARD_SIZE)
 
+def loadTrumpCard(card):
+    return pygame.transform.rotate(loadCard(card), 270)
+
+def loadCardBack():
+    return pygame.transform.scale(loadImage('cards/back.png'), CARD_SIZE)
+
+
 def getDeckArray(revealedCard):
     deck = []
 
