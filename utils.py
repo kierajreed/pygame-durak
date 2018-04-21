@@ -9,12 +9,16 @@ BACKGROUND = 64, 64, 64
 RANKS = ['6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
 SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 
+CARD_SIZE = (150, 228)
+
+
 # Helper functions used to make code cleaner. #
 def loadImage(filename):
     return pygame.image.load('assets/images/' + filename)
 
 def loadCard(card):
-    return pygame.image.load('assets/images/cards/' + repr(card))
+    image = pygame.image.load('assets/images/cards/' + card.filename)
+    return pygame.transform.scale(image, CARD_SIZE)
 
 def getDeckArray(revealedCard):
     deck = []
@@ -34,3 +38,5 @@ def getDeckArray(revealedCard):
 
     random.shuffle(deck)
     return deck
+
+#def renderHand(hand, hidden):

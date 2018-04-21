@@ -2,6 +2,7 @@ class Card(object):
     def __init__(self, rank, suit, isTrump):
         self.rank = rank
         self.suit = suit
+        self.filename = rank[:1] + suit[:1] + '.png'
         self.value = self.getValue()
         if(isTrump):
             self.value += 9
