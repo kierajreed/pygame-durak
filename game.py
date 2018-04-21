@@ -4,7 +4,6 @@ import utils
 if __name__ == '__main__':
         # Initialize pygame and make the window. #
         pygame.init()
-        #pygame.display.set_icon(utils.loadImage('logo.png'))
         pygame.display.set_caption('Durak!')
         screen = pygame.display.set_mode(utils.SCREEN_SIZE)
 
@@ -14,9 +13,16 @@ if __name__ == '__main__':
 
         deck = utils.getDeckArray(trump_card)
 
-        # DEBUG #
-        print(deck)
-        print('trump_card: ' + str(trump_card))
+        player_hand = []
+        ai_hand = []
+
+        # Deal the cards. #
+        for index in range(0, 12):
+            if index % 2 == 0:
+                player_hand.append(deck.pop(index))
+            else:
+                ai_hand.append(deck.pop(index))
+
 
         # Start the game loop. #
         while True:
