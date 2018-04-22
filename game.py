@@ -1,11 +1,13 @@
 import pygame, sys
 import utils
 
+
 if __name__ == '__main__':
         # Initialize pygame and make the window. #
         pygame.init()
         pygame.display.set_caption('Durak!')
         screen = pygame.display.set_mode(utils.SCREEN_SIZE)
+
 
         deck = utils.getDeckArray(None)
         trump_card = deck.pop(0)
@@ -36,8 +38,10 @@ if __name__ == '__main__':
 
                 for index in range(0, len(player_hand)):
                     screen.blit(utils.loadCard(player_hand[index]), utils.getCardPosition(index, len(player_hand), False))
-
                 for index in range(0, len(ai_hand)):
                     screen.blit(utils.loadCardBack(), utils.getCardPosition(index, len(ai_hand), True))
+
+                if utils.STATUS != None:
+                    screen.blit(utils.getStatusMessage(), utils.STATUS_POSITON)
 
                 pygame.display.flip()

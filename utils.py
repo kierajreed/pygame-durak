@@ -18,6 +18,8 @@ HAND_WIDTH = 800
 HAND_POSITION = HAND_X, HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 50, HEIGHT - 160)
 AI_HAND_POSITION = AI_HAND_X, AI_HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 50, -100)
 
+STATUS = None
+STATUS_POSITON = (400, 400)
 
 # Helper functions used to make code cleaner. #
 def loadCard(card):
@@ -63,6 +65,16 @@ def getCardPosition(index, num_cards, opponent):
         else:
             return (HAND_X + ((HAND_WIDTH - 150) / num_cards) * index, HAND_Y)
 
+
+def set_status(status):
+    STATUS = status
+
+def getStatusMessage():
+    if pygame.font.get_init() == False:
+        pygame.font.init()
+
+    font = pygame.font.SysFont('Arial', 30)
+    return font.render(STATUS, False, (0, 0, 0))
 
 
 
