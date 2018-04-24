@@ -1,6 +1,8 @@
 import pygame, sys
 import utils
-
+import random
+from ai import AiPlayer
+from human import HumanPlayer
 
 if __name__ == '__main__':
         # Initialize pygame and make the window. #
@@ -15,15 +17,15 @@ if __name__ == '__main__':
 
         deck = utils.getDeckArray(trump_card)
 
-        player_hand = []
-        ai_hand = []
+        players = [HumanPlayer(), AiPlayer()]
+        currentPlayerIndex = random.randrange(0, 1)
 
         # Deal the cards. #
         for index in range(0, 12):
             if index % 2 == 0:
-                player_hand.append(deck.pop(index))
+                players[0].hand.append(deck.pop(index))
             else:
-                ai_hand.append(deck.pop(index))
+                players[1].hand.append(deck.pop(index))
 
 
         # Start the game loop. #
@@ -36,10 +38,10 @@ if __name__ == '__main__':
                 screen.blit(utils.loadTrumpCard(trump_card), utils.TRUMP_POSITION)
                 screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
 
-                for index in range(0, len(player_hand)):
-                    screen.blit(utils.loadCard(player_hand[index]), utils.getCardPosition(index, len(player_hand), False))
-                for index in range(0, len(ai_hand)):
-                    screen.blit(utils.loadCardBack(), utils.getCardPosition(index, len(ai_hand), True))
+                for index in range(0, len(players[0].hand)):
+                    screen.blit(utils.loadCard(players[0].hand[index]), utils.getCardPosition(index, len(players[0].hand), False))
+                for index in range(0, len(players[1].hand)):
+                    screen.blit(utils.loadCardBack(), utils.getCardPosition(index, len(players[1].hand), True))
 
                 if utils.STATUS != None:
                     screen.blit(utils.getStatusMessage(), utils.STATUS_POSITON)
