@@ -27,10 +27,7 @@ if __name__ == '__main__':
             else:
                 players[1].hand.append(deck.pop(index))
 
-        game_state = {
-            'attackingCards': [],
-            'defendedCards': []
-        }
+        game_state = {}
 
         # Start the game loop. #
         while True:
