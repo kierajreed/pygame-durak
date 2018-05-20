@@ -31,8 +31,7 @@ if __name__ == '__main__':
 
     game_state = {
         'attackingCard': None,
-        'defendingCard': None,
-        'defendedSets': None
+        'defendedSets': []
     }
 
     # Start the game loop. #
@@ -57,8 +56,10 @@ if __name__ == '__main__':
 
         for index in range(0, len(players[0].hand)):
             screen.blit(utils.loadCard(players[0].hand[index]), utils.getCardPosition(index, len(players[0].hand), False))
+
         for index in range(0, len(players[1].hand)):
             screen.blit(utils.loadCardBack(), utils.getCardPosition(index, len(players[1].hand), True))
+
         if utils.STATUS != None:
             screen.blit(utils.getStatusMessage(), utils.STATUS_POSITON)
 
