@@ -16,9 +16,11 @@ if __name__ == '__main__':
         trump_suit = trump_card.suit
 
         deck = utils.getDeckArray(trump_card)
+        discard = []
 
         players = [HumanPlayer(), AiPlayer()]
-        currentPlayerIndex = random.randrange(0, 1)
+        currentStarterIndex = random.randrange(0, 1)
+        currentPlayerIndex = currentStarterIndex
 
         # Deal the cards. #
         for index in range(0, 12):
@@ -27,17 +29,31 @@ if __name__ == '__main__':
             else:
                 players[1].hand.append(deck.pop(index))
 
-        game_state = {}
+        game_state = {
+            'attackingCard': None,
+            'defendingCard': None,
+            'defendedSets': None
+        }
 
         # Start the game loop. #
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: sys.exit()
 
+            if currentPlayerIndex == currentStarterIndex:
+                players[currentPlayerIndex].chooseCardToAttack(game_state)
+            else:
+                players[currentPlayerIndex].chooseCardToDefend(game_state)
+
+
+            # Rendering Code #
             screen.fill(utils.BACKGROUND)
 
             screen.blit(utils.loadTrumpCard(trump_card), utils.TRUMP_POSITION)
             screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
+
+            if len(discard) > 0:
+                screen.blit(utils.loadCard(discard[len(discard) - 1]), utils.DISCARD_POSITION)
 
             for index in range(0, len(players[0].hand)):
                 screen.blit(utils.loadCard(players[0].hand[index]), utils.getCardPosition(index, len(players[0].hand), False))
@@ -47,3 +63,20 @@ if __name__ == '__main__':
                 screen.blit(utils.getStatusMessage(), utils.STATUS_POSITON)
 
             pygame.display.flip()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#

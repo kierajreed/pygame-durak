@@ -3,7 +3,7 @@ import random
 from card import Card
 
 # CONSTANTS #
-SCREEN_SIZE = WIDTH, HEIGHT = 1000, 700
+SCREEN_SIZE = WIDTH, HEIGHT = 1200, 840
 BACKGROUND = 64, 64, 64
 
 RANKS = ['6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
@@ -12,14 +12,15 @@ SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 CARD_SIZE = (150, 228)
 
 DECK_POSITION = (10, (HEIGHT - 228) / 2)
+DISCARD_POSITION = (1040, (HEIGHT - 228) / 2)
 TRUMP_POSITION = (43, (HEIGHT - 150) / 2)
 
-HAND_WIDTH = 800
+HAND_WIDTH = 960
 HAND_POSITION = HAND_X, HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 50, HEIGHT - 160)
 AI_HAND_POSITION = AI_HAND_X, AI_HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 50, -100)
 
 STATUS = None
-STATUS_POSITON = (400, 400)
+STATUS_POSITON = (300, 600)
 
 # Helper functions used to make code cleaner. #
 def loadCard(card):
