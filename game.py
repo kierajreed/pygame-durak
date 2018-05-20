@@ -29,55 +29,54 @@ if __name__ == '__main__':
         else:
             players[1].hand.append(deck.pop(index))
 
-    game_state = {
-        'attackingCard': None,
-        'defendedSets': []
-    }
+    attackingCard = None
+    cardsInPlay = []
+
+    turnComplete = False
 
     # Start the game loop. #
     while True:
+        # Check for events. #
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print 'click'
+            elif event.type == pygame.QUIT:
+                sys.exit()
 
+
+        # Players take their turns. #
         if currentPlayerIndex == currentStarterIndex:
-            players[currentPlayerIndex].chooseCardToAttack(game_state)
+            print 'attacking'
+
+            attackingCard = players[currentPlayerIndex].chooseCardToAttack(cardsInPlay)
+
+            currentPlayerIndex = not currentPlayerIndex
         else:
-            players[currentPlayerIndex].chooseCardToDefend(game_state)
+            print 'defending'
+
+            cardsInPlay.append(attackingCard)
+            cardsInPlay.append(players[currentPlayerIndex].chooseCardToDefend(attackingCard))
+
+            attackingCard = None
+            currentPlayerIndex = not currentPlayerIndex
 
 
-        # Rendering Code #
+        # Render the game. #
         screen.fill(utils.BACKGROUND)
 
-        screen.blit(utils.loadTrumpCard(trump_card), utils.TRUMP_POSITION)
-        screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
-
+        if(trump_card != None):
+            screen.blit(utils.loadTrumpCard(trump_card), utils.TRUMP_POSITION)
+        if(len(deck) > 0):
+            screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
         if len(discard) > 0:
             screen.blit(utils.loadCard(discard[len(discard) - 1]), utils.DISCARD_POSITION)
 
         for index in range(0, len(players[0].hand)):
             screen.blit(utils.loadCard(players[0].hand[index]), utils.getCardPosition(index, len(players[0].hand), False))
-
         for index in range(0, len(players[1].hand)):
             screen.blit(utils.loadCardBack(), utils.getCardPosition(index, len(players[1].hand), True))
 
-        if utils.STATUS != None:
+        if utils.getStatus() != None:
             screen.blit(utils.getStatusMessage(), utils.STATUS_POSITON)
 
         pygame.display.flip()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#

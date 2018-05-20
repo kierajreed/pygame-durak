@@ -1,11 +1,14 @@
 from player import Player
+import utils
 
 class AiPlayer(Player):
     def __init__(self):
         Player.__init__(self)
 
-    def chooseCardToDefend(self, game_state):
-        pass
+    def chooseCardToAttack(self, cardsInPlay):
+        utils.setStatus('Waiting for opponent...')
 
-    def chooseCardToAttack(self, game_state):
-        pass
+        return None
+
+    def chooseCardToDefend(self, attackingCard):
+        return None

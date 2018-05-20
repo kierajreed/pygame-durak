@@ -66,8 +66,9 @@ def getCardPosition(index, num_cards, opponent):
         else:
             return (HAND_X + ((HAND_WIDTH - 150) / num_cards) * index, HAND_Y)
 
-
-def set_status(status):
+def getStatus():
+    return STATUS
+def setStatus(status):
     STATUS = status
 
 def getStatusMessage():
@@ -76,17 +77,3 @@ def getStatusMessage():
 
     font = pygame.font.SysFont('Arial', 30)
     return font.render(STATUS, False, (0, 0, 0))
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
