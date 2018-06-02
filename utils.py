@@ -66,9 +66,12 @@ def getCardPosition(index, num_cards, opponent):
         else:
             return (HAND_X + ((HAND_WIDTH - 150) / num_cards) * index, HAND_Y)
 
+
 def getStatus():
     return STATUS
+
 def setStatus(status):
+    global STATUS
     STATUS = status
 
 def getStatusMessage():
