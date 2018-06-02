@@ -1,14 +1,18 @@
-from player import Player
 import utils
 
-class AiPlayer(Player):
+class AiPlayer(object):
     def __init__(self):
-        Player.__init__(self)
+        self.hand = []
+        self.isHuman = False
 
     def chooseCardToAttack(self, cardsInPlay):
-        utils.setStatus('Waiting for opponent...')
+        maxValue = 24
+        selectedCard = None
+        for card in self.hand:
+            if card.value < maxValue:
+                selectedCard = card
 
-        return None
+        return selectedCard
 
     def chooseCardToDefend(self, attackingCard):
         return None

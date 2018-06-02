@@ -9,7 +9,6 @@ pygame.init()
 pygame.display.set_caption('Durak!')
 screen = pygame.display.set_mode(utils.SCREEN_SIZE)
 
-
 deck = utils.getDeckArray(None)
 trump_card = deck.pop(0)
 trump_suit = trump_card.suit
@@ -18,7 +17,7 @@ deck = utils.getDeckArray(trump_card)
 discard = []
 
 players = [HumanPlayer(), AiPlayer()]
-currentStarterIndex = random.randint(0, 1)
+currentStarterIndex = random.randrange(0, 2)
 currentPlayerIndex = currentStarterIndex
 
 # Deal the cards. #
@@ -38,8 +37,8 @@ turnComplete = False
 while True:
     # Check for events. #
     for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            print 'click'
+        if event.type == pygame.MOUSEBUTTONUP:
+            isValid = utils.checkEvent(event)
         elif event.type == pygame.QUIT:
             sys.exit()
 
@@ -51,7 +50,9 @@ while True:
             else:
                 utils.setStatus('Choose a card to defend the {}!'.format(str(attackingCard)))
 
+        utils.setPlayerCardRects(players[0].hand)
         turnInit = True
+
 
     # The AI chooses cards. #
     if not players[currentPlayerIndex].isHuman:
@@ -72,9 +73,9 @@ while True:
     # Render the game. #
     screen.fill(utils.BACKGROUND)
 
-    if(trump_card != None):
+    if trump_card != None:
         screen.blit(utils.loadTrumpCard(trump_card), utils.TRUMP_POSITION)
-    if(len(deck) > 0):
+    if len(deck) > 0:
         screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
     if len(discard) > 0:
         screen.blit(utils.loadCard(discard[len(discard) - 1]), utils.DISCARD_POSITION)

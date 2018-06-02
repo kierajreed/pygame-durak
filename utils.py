@@ -2,7 +2,7 @@ import pygame
 import random
 from card import Card
 
-# CONSTANTS #
+# Constants and a few global variables. #
 SCREEN_SIZE = WIDTH, HEIGHT = 1200, 840
 BACKGROUND = 64, 64, 64
 
@@ -21,6 +21,8 @@ AI_HAND_POSITION = AI_HAND_X, AI_HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 100, - 100
 
 STATUS = None
 STATUS_POSITON = (300, 600)
+
+PLAYER_CARD_RECTS = []
 
 # Helper functions used to make code cleaner. #
 def loadCard(card):
@@ -82,8 +84,20 @@ def getStatusMessage():
     return font.render(STATUS, False, (0, 0, 0))
 
 
+def addTuples(a, b):
+    return (a[0] + b[0], a[1] + b[1])
+
+def setPlayerCardRects(hand):
+    global PLAYER_CARD_RECTS
+    pass
+
+
 def checkEvent(event):
     print event.pos
+
+    for rect in PLAYER_CARD_RECTS:
+        if rect.collidepoint(event.pos):
+            return True
 
     return False
 
