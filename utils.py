@@ -15,9 +15,9 @@ DECK_POSITION = (10, (HEIGHT - 228) / 2)
 DISCARD_POSITION = (1040, (HEIGHT - 228) / 2)
 TRUMP_POSITION = (43, (HEIGHT - 150) / 2)
 
-HAND_WIDTH = 960
-HAND_POSITION = HAND_X, HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 50, HEIGHT - 160)
-AI_HAND_POSITION = AI_HAND_X, AI_HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 50, -100)
+HAND_WIDTH = 1160
+HAND_POSITION = HAND_X, HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 100, HEIGHT - 160)
+AI_HAND_POSITION = AI_HAND_X, AI_HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 100, - 100)
 
 STATUS = None
 STATUS_POSITON = (300, 600)
@@ -80,3 +80,17 @@ def getStatusMessage():
 
     font = pygame.font.SysFont('Arial', 30)
     return font.render(STATUS, False, (0, 0, 0))
+
+
+def checkEvent(event):
+    print event.pos
+
+    return False
+
+
+
+
+
+
+
+#
