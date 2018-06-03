@@ -89,6 +89,11 @@ def addTuples(a, b):
 
 def setPlayerCardRects(hand):
     global PLAYER_CARD_RECTS
+
+    for index in range(0, len(hand)):
+        top_left = getCardPosition(index, len(hand), False)
+        print index + ' ' + top_left
+
     pass
 
 
