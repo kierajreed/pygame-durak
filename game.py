@@ -38,7 +38,19 @@ while True:
     # Check for events. #
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
-            isValid = utils.isEventValid(event)
+            if utils.isClickValid(event):
+                if currentPlayerIndex == 0:
+                    index = utils.getClickedIndex(event)
+
+                    if currentPlayerIndex == currentStarterIndex:
+                        if utils.isValidAttack(cardsInPlay, players[0].hand[index]):
+                            attackingCard = players[0].hand.pop(index)
+                            cardsInPlay.append(attackingCard)
+
+                            currentPlayerIndex = not currentPlayerIndex
+                            turnInit = False
+                    else:
+                        pass
         elif event.type == pygame.QUIT:
             sys.exit()
 
@@ -79,6 +91,10 @@ while True:
         screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
     if len(discard) > 0:
         screen.blit(utils.loadCard(discard[len(discard) - 1]), utils.DISCARD_POSITION)
+
+    if len(cardsInPlay) > 0:
+        for index in range(0, len(cardsInPlay)):
+            screen.blit(utils.loadCard(cardsInPlay[index]), utils.getPlayPosition(index, len(cardsInPlay)))
 
     for index in range(0, len(players[0].hand)):
         screen.blit(utils.loadCard(players[0].hand[index]), utils.getCardPosition(index, len(players[0].hand), False))

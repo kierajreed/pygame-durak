@@ -11,6 +11,7 @@ class AiPlayer(object):
         for card in self.hand:
             if card.value < maxValue:
                 selectedCard = card
+                maxValue = selectedCard.value
 
         return selectedCard
 

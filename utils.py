@@ -11,13 +11,18 @@ SUITS = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 
 CARD_SIZE = (150, 228)
 
-DECK_POSITION = (10, (HEIGHT - 228) / 2)
-DISCARD_POSITION = (1040, (HEIGHT - 228) / 2)
-TRUMP_POSITION = (43, (HEIGHT - 150) / 2)
+DECK_POSITION = (10, (HEIGHT - CARD_SIZE[1]) / 2)
+DISCARD_POSITION = (1040, (HEIGHT - CARD_SIZE[1]) / 2)
+TRUMP_POSITION = (43, (HEIGHT - CARD_SIZE[0]) / 2)
 
 HAND_WIDTH = 1160
 HAND_POSITION = HAND_X, HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 100, HEIGHT - 160)
-AI_HAND_POSITION = AI_HAND_X, AI_HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 100, - 100)
+AI_HAND_POSITION = AI_HAND_X, AI_HAND_Y = ((WIDTH - HAND_WIDTH) / 2 + 100, -100)
+
+PLAY_WIDTH = 960
+LEFT_OFFSET = 160
+PLAY_TOP_POSITION = TOP_X, TOP_Y = ((WIDTH - PLAY_WIDTH) / 2 + LEFT_OFFSET, (HEIGHT - CARD_SIZE[1]) / 2 - 100)
+PLAY_BOTTOM_POSITION = BOTTOM_X, BOTTOM_Y = ((WIDTH - PLAY_WIDTH) / 2 + LEFT_OFFSET + CARD_SIZE[0] / 2, (HEIGHT - CARD_SIZE[1]) / 2 + 100)
 
 STATUS = None
 STATUS_POSITON = (300, 600)
@@ -61,13 +66,24 @@ def getCardPosition(index, num_cards, opponent):
         if index == 0:
             return AI_HAND_POSITION
         else:
-            return (AI_HAND_X + ((HAND_WIDTH - 150) / num_cards) * index, AI_HAND_Y)
+            return (AI_HAND_X + ((HAND_WIDTH - CARD_SIZE[0]) / num_cards) * index, AI_HAND_Y)
     else:
         if index == 0:
             return HAND_POSITION
         else:
-            return (HAND_X + ((HAND_WIDTH - 150) / num_cards) * index, HAND_Y)
+            return (HAND_X + ((HAND_WIDTH - CARD_SIZE[0]) / num_cards) * index, HAND_Y)
 
+def getPlayPosition(index, num_cards):
+    if index % 2 == 0:
+        if index == 0:
+            return PLAY_TOP_POSITION
+        else:
+            return (TOP_X + ((PLAY_WIDTH - CARD_SIZE[0]) / num_cards) * index, TOP_Y)
+    else:
+        if index == 1:
+            return PLAY_BOTTOM_POSITION
+        else:
+            return (BOTTOM_X + ((PLAY_WIDTH - CARD_SIZE[0]) / num_cards) * index, BOTTOM_Y)
 
 def getStatus():
     return STATUS
@@ -84,32 +100,52 @@ def getStatusMessage():
     return font.render(STATUS, False, (0, 0, 0))
 
 
-def addTuples(a, b):
-    return (a[0] + b[0], a[1] + b[1])
-
 def setPlayerCardRects(hand):
     global PLAYER_CARD_RECTS
 
-    for index in range(0, len(hand)):
-        top_left = getCardPosition(index, len(hand), False)
-        print index + ' ' + top_left
+    first = getCardPosition(0, len(hand), False)
+    second = getCardPosition(1, len(hand), False)
 
-    pass
+    if second[0] - first[0] < CARD_SIZE[0]:
+        overlap = CARD_SIZE[0] - (second[0] - first[0])
+        width = CARD_SIZE[0] - overlap
+        for index in range(0, len(hand)):
+            top_left = getCardPosition(index, len(hand), False)
+
+            PLAYER_CARD_RECTS.append(pygame.Rect(top_left, (width, CARD_SIZE[1])))
+    else:
+        for index in range(0, len(hand)):
+            top_left = getCardPosition(index, len(hand), False)
+
+            PLAYER_CARD_RECTS.append(pygame.Rect(top_left, CARD_SIZE))
 
 
-def isEventValid(event):
-    print event.pos
-
+def isClickValid(event):
     for rect in PLAYER_CARD_RECTS:
         if rect.collidepoint(event.pos):
             return True
 
     return False
 
+def getClickedIndex(event):
+    for index in range(0, len(PLAYER_CARD_RECTS)):
+        if PLAYER_CARD_RECTS[index].collidepoint(event.pos):
+            return index
 
 
+def isValidAttack(cards_in_play, card):
+    if len(cards_in_play) == 0:
+        return True
+    else:
+        valid_suits = []
 
+        for _card in cards_in_play:
+            if _card.suit in valid_suits:
+                continue
+            else:
+                valid_suits.append(_card.suit)
 
+        if card.suit in valid_suits:
+            return True
 
-
-#
+    return False
