@@ -7,13 +7,15 @@ class AiPlayer(object):
 
     def chooseCardToAttack(self, cardsInPlay):
         maxValue = 24
-        selectedCard = None
-        for card in self.hand:
-            if card.value < maxValue:
-                selectedCard = card
-                maxValue = selectedCard.value
+        selectedCardIndex = None
+        for index in range(0, len(self.hand)):
+            card = self.hand[index]
 
-        return selectedCard
+            if card.value < maxValue:
+                selectedCardIndex = index
+                maxValue = card.value
+
+        return self.hand.pop(selectedCardIndex)
 
     def chooseCardToDefend(self, attackingCard):
         return None
