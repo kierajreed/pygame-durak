@@ -38,7 +38,7 @@ while True:
     # Check for events. #
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
-            isValid = utils.checkEvent(event)
+            isValid = utils.isEventValid(event)
         elif event.type == pygame.QUIT:
             sys.exit()
 

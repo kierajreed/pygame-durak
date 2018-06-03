@@ -92,7 +92,7 @@ def setPlayerCardRects(hand):
     pass
 
 
-def checkEvent(event):
+def isEventValid(event):
     print event.pos
 
     for rect in PLAYER_CARD_RECTS:
