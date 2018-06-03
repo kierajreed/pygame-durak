@@ -78,12 +78,18 @@ def getPlayPosition(index, num_cards):
         if index == 0:
             return PLAY_TOP_POSITION
         else:
-            return (TOP_X + ((PLAY_WIDTH - CARD_SIZE[0]) / num_cards) * index, TOP_Y)
+            if PLAY_WIDTH - CARD_SIZE[0] * num_cards < 0:
+                pass
+            else:
+                return (TOP_X + CARD_SIZE[0] / 2 * index, TOP_Y)
     else:
         if index == 1:
             return PLAY_BOTTOM_POSITION
         else:
-            return (BOTTOM_X + ((PLAY_WIDTH - CARD_SIZE[0]) / num_cards) * index, BOTTOM_Y)
+            if PLAY_WIDTH - CARD_SIZE[0] * num_cards < 0:
+                pass
+            else:
+                return (BOTTOM_X + CARD_SIZE[0] / 2 * index, BOTTOM_Y)
 
 def getStatus():
     return STATUS
@@ -137,15 +143,26 @@ def isValidAttack(cards_in_play, card):
     if len(cards_in_play) == 0:
         return True
     else:
-        valid_suits = []
+        valid_ranks = []
 
         for _card in cards_in_play:
-            if _card.suit in valid_suits:
+            if _card.rank in valid_ranks:
                 continue
             else:
-                valid_suits.append(_card.suit)
+                valid_ranks.append(_card.rank)
 
-        if card.suit in valid_suits:
+        if card.rank in valid_ranks:
+            return True
+
+    return False
+
+
+def canPlayerDefend(player, to_defend, trump_suit):
+    hand = player.hand
+    valid_suits = [to_defend.suit, trump_suit]
+
+    for card in hand:
+        if card.suit in valid_suits and card.value > to_defend.value:
             return True
 
     return False

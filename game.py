@@ -75,11 +75,14 @@ while True:
             currentPlayerIndex = not currentPlayerIndex
             turnInit = False
         else:
-            pass
-            #cardsInPlay.append(players[currentPlayerIndex].chooseCardToDefend(attackingCard))
+            if utils.canPlayerDefend(players[1], attackingCard, trump_card.suit):
+                cardsInPlay.append(players[1].chooseCardToDefend(attackingCard, trump_card.suit))
 
-            #attackingCard = None
-            #currentPlayerIndex = not currentPlayerIndex
+                attackingCard = None
+                currentPlayerIndex = not currentPlayerIndex
+                turnInit = False
+            else:
+                turnInit = False
 
 
     # Render the game. #
