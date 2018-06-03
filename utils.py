@@ -41,15 +41,15 @@ def getDeckArray(revealedCard):
 
     for suit in SUITS:
         for rank in RANKS:
-            if(revealedCard != None):
-                if(revealedCard.suit == suit):
-                    if(revealedCard.rank == rank):
+            if revealedCard != None:
+                if revealedCard.suit == suit:
+                    if revealedCard.rank == rank :
                         continue
                     else:
                         deck.append(Card(rank, suit, True))
                 else:
                     deck.append(Card(rank, suit, False))
-            elif(revealedCard == None):
+            elif revealedCard == None :
                 deck.append(Card(rank, suit, False))
 
     random.shuffle(deck)
