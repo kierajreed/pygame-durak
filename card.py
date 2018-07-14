@@ -1,13 +1,13 @@
 class Card(object):
-    def __init__(self, rank, suit, isTrump):
+    def __init__(self, rank, suit, is_trump):
         self.rank = rank
         self.suit = suit
         self.filename = rank[:1] + suit[:1] + '.png'
-        self.value = self.getValue()
-        if(isTrump):
+        self.value = self.get_value()
+        if is_trump:
             self.value += 9
 
-    def getValue(self):
+    def get_value(self):
         try:
             int(self.rank)
             return int(self.rank)
@@ -23,7 +23,7 @@ class Card(object):
             else:
                 raise Exception('Invalid value!')
 
-    def toString(self):
+    def to_string(self):
         try:
             int(self.rank)
             return ['#', '#', '#', '#', '#', '#', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'][int(self.rank)] + ' of ' + self.suit
@@ -31,6 +31,7 @@ class Card(object):
             return self.rank + ' of ' + self.suit
 
     def __str__(self):
-        return self.toString()
+        return self.to_string()
+
     def __repr__(self):
-        return self.toString()
+        return self.to_string()

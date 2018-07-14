@@ -1,19 +1,21 @@
-import pygame, sys
+import pygame
+import sys
 import utils
 import random
 from ai import AiPlayer
 from human import HumanPlayer
+
 
 # Initialize pygame and make the window. #
 pygame.init()
 pygame.display.set_caption('Durak!')
 screen = pygame.display.set_mode(utils.SCREEN_SIZE)
 
-deck = utils.getDeckArray(None)
+deck = utils.get_deck_array(None)
 trump_card = deck.pop(0)
 trump_suit = trump_card.suit
 
-deck = utils.getDeckArray(trump_card)
+deck = utils.get_deck_array(trump_card)
 discard = []
 
 players = [HumanPlayer(), AiPlayer()]
@@ -38,12 +40,14 @@ while True:
     # Check for events. #
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
-            if utils.isClickValid(event):
+            if utils.is_click_valid(event):
                 if currentPlayerIndex == 0:
-                    index = utils.getClickedIndex(event)
+                    index = utils.get_clicked_index(event)
+
+                    print 'index: {}, length: {}'.format(index, len(players[0].hand))
 
                     if currentPlayerIndex == currentStarterIndex:
-                        if utils.isValidAttack(cardsInPlay, players[0].hand[index]):
+                        if utils.is_valid_attack(cardsInPlay, players[0].hand[index]):
                             attackingCard = players[0].hand.pop(index)
                             cardsInPlay.append(attackingCard)
 
@@ -58,25 +62,24 @@ while True:
     if not turnInit:
         if players[currentPlayerIndex].isHuman:
             if currentPlayerIndex == currentStarterIndex:
-                utils.setStatus('Choose a card to attack!')
+                utils.set_status('Choose a card to attack!')
             else:
-                utils.setStatus('Choose a card to defend the {}!'.format(str(attackingCard)))
+                utils.set_status('Choose a card to defend the {}!'.format(str(attackingCard)))
 
-        utils.setPlayerCardRects(players[0].hand)
+        utils.set_player_card_rects(players[0].hand)
         turnInit = True
-
 
     # The AI chooses cards. #
     if not players[currentPlayerIndex].isHuman:
         if currentPlayerIndex == currentStarterIndex:
-            attackingCard = players[currentPlayerIndex].chooseCardToAttack(cardsInPlay)
+            attackingCard = players[currentPlayerIndex].choose_card_to_attack(cardsInPlay)
             cardsInPlay.append(attackingCard)
 
             currentPlayerIndex = not currentPlayerIndex
             turnInit = False
         else:
-            if utils.canPlayerDefend(players[1], attackingCard, trump_card.suit):
-                cardsInPlay.append(players[1].chooseCardToDefend(attackingCard, trump_card.suit))
+            if utils.can_player_defend(players[1], attackingCard, trump_card.suit):
+                cardsInPlay.append(players[1].choose_card_to_defend(attackingCard, trump_card.suit))
 
                 attackingCard = None
                 currentPlayerIndex = not currentPlayerIndex
@@ -84,27 +87,26 @@ while True:
             else:
                 turnInit = False
 
-
     # Render the game. #
     screen.fill(utils.BACKGROUND)
 
-    if trump_card != None:
-        screen.blit(utils.loadTrumpCard(trump_card), utils.TRUMP_POSITION)
+    if trump_card is not None:
+        screen.blit(utils.load_trump_card(trump_card), utils.TRUMP_POSITION)
     if len(deck) > 0:
-        screen.blit(utils.loadCardBack(), utils.DECK_POSITION)
+        screen.blit(utils.load_card_back(), utils.DECK_POSITION)
     if len(discard) > 0:
-        screen.blit(utils.loadCard(discard[len(discard) - 1]), utils.DISCARD_POSITION)
+        screen.blit(utils.load_card(discard[len(discard) - 1]), utils.DISCARD_POSITION)
 
     if len(cardsInPlay) > 0:
         for index in range(0, len(cardsInPlay)):
-            screen.blit(utils.loadCard(cardsInPlay[index]), utils.getPlayPosition(index, len(cardsInPlay)))
+            screen.blit(utils.load_card(cardsInPlay[index]), utils.get_play_position(index, len(cardsInPlay)))
 
     for index in range(0, len(players[0].hand)):
-        screen.blit(utils.loadCard(players[0].hand[index]), utils.getCardPosition(index, len(players[0].hand), False))
+        screen.blit(utils.load_card(players[0].hand[index]), utils.get_card_position(index, len(players[0].hand), False))
     for index in range(0, len(players[1].hand)):
-        screen.blit(utils.loadCardBack(), utils.getCardPosition(index, len(players[1].hand), True))
+        screen.blit(utils.load_card_back(), utils.get_card_position(index, len(players[1].hand), True))
 
-    if utils.getStatus() != None:
-        screen.blit(utils.getStatusMessage(), utils.STATUS_POSITON)
+    if utils.get_status() is not None:
+        screen.blit(utils.get_status_message(), utils.STATUS_POSITION)
 
     pygame.display.flip()
